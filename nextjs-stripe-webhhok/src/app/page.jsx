@@ -4,11 +4,15 @@ import { products } from "./products";
 const handlePay = async (product) => {
   const res = await fetch("api/checkout", {
     method: "POST",
+    body: JSON.stringify(product),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
-  const data = await res.json();
+  const session = await res.json();
 
-  console.log(data);
+  window.location = session.url;
 };
 
 function App() {

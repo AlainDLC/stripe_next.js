@@ -2,8 +2,9 @@ export const products = [
   {
     id: 1,
     name: "Product 1",
-    price: 100,
-    image: "https://placehold.co/150",
+    price: 100000,
+    image:
+      "https://storage.kawasaki.eu/public/kawasaki.eu/en-EU/model/25MY_Ninja_650_GY1_STU__1_.png",
   },
   {
     id: 2,

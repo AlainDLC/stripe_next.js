@@ -2,30 +2,32 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_KEY, {
-  apiVersion: "2023-10-16", // eller den version du använder
+  apiVersion: "2025-03-31.basil",
 });
 
 export async function POST(req) {
+  const body = await req.json();
+
   const session = await stripe.checkout.sessions.create({
     success_url: "http://localhost:3000/success",
     line_items: [
       {
         price_data: {
-          currency: "sek",
+          currency: "usd",
           product_data: {
-            name: "Kawasaki",
-            images: [
-              "https://storage.kawasaki.eu/public/kawasaki.eu/en-EU/model/25MY_Ninja_650_GY1_STU__1_.png",
-            ],
+            name: body.name,
+            images: [body.image],
           },
-          unit_amount: 100000,
+          unit_amount: body.price,
         },
         quantity: 1,
       },
     ],
+    metadata: {
+      productId: body.id,
+    },
     mode: "payment",
   });
 
-  console.log(session);
-  return NextResponse.json("batala");
+  return NextResponse.json(session);
 }
