@@ -1,8 +1,14 @@
 "use client";
 import { products } from "./products";
 
-const handlePay = (product) => {
-  console.log(product);
+const handlePay = async (product) => {
+  const res = await fetch("api/checkout", {
+    method: "POST",
+  });
+
+  const data = await res.json();
+
+  console.log(data);
 };
 
 function App() {
